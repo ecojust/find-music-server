@@ -139,3 +139,14 @@ jobs:
       # Install frontend dependencies
       - name: Install frontend dependencies
         run: pnpm install
+
+      - name: Run hifini script
+        run: node src/hifini.js
+
+      - name: Print result
+        shell: bash
+        run: |
+          # 读取当前配置
+          RESULT_FILE="result.txt"
+          # 显示更新后的配置
+          cat $RESULT_FILE | grep version

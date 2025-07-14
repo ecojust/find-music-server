@@ -1,4 +1,10 @@
 import puppeteer from "puppeteer";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "node:url";
+import { dirname } from "node:path";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export const userAgents = [
   // Chrome (Windows)
@@ -66,4 +72,22 @@ export const fetchhtml = async (url, waitDomSelector) => {
   } catch (err) {
     return "Error fetching page: " + err.message;
   }
+};
+
+export const readFile = async (fileName) => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(path.join(__dirname, fileName), (err, data) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(data.toString());
+    });
+  });
+};
+
+export const writeFile = async (fileName, content) => {
+  return new Promise((resolve, reject) => {
+    fs.writeFileSync(path.join(__dirname, fileName), content);
+    resolve(true);
+  });
 };
