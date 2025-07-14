@@ -2,7 +2,7 @@ import { fetchhtml, readFile, writeFile } from "./utils.js";
 
 const searchList = async (keyword) => {
   // const url = `https://hifini.net/search.htm?keyword=${keyword}`;
-  const url = `https://google.com`;
+  const url = `https://kuwo.cn/search/list?key=traveling`;
 
   console.log("url", url);
   const html = await fetchhtml(url);
