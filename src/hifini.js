@@ -25,9 +25,9 @@ const searchList = async (keyword) => {
   }
 };
 
-const keyword = await readFile("../entry.txt");
-const list = await searchList(keyword);
+// const keyword = await readFile("../entry.txt");
+// const list = await searchList(keyword);
 
-console.log("list", list);
+// console.log("list", list);
 
-await writeFile("../result.txt", JSON.stringify(list));
+// await writeFile("../result.txt", JSON.stringify(list));

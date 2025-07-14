@@ -5,10 +5,12 @@
   "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "hifini": "node src/hifini.js"
+    "hifini": "node src/hifini.js",
+    "kuwo": "node src/kuwo.js"
   },
   "dependencies": {
-    "puppeteer": "^24.10.0"
+    "puppeteer": "^24.10.0",
+    "cheerio": "^1.0.0"
   },
   "author": "",
   "license": "ISC"

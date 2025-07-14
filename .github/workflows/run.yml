@@ -56,7 +56,7 @@ jobs:
           # 显示更新后的配置
           cat $RESULT_FILE
 
-  netease:
+  kuwo:
     needs: hifini
     permissions:
       contents: write
@@ -89,68 +89,17 @@ jobs:
       - name: Install frontend dependencies
         run: pnpm install
 
-  qq:
-    needs: netease
-    permissions:
-      contents: write
-      actions: write
-      attestations: write
-      deployments: write
-      packages: write
-      id-token: write
-    strategy:
-      fail-fast: false
+      - name: Install dependencies
+        run: |
+          npx puppeteer browsers install chrome  # 显式安装 Chrome
 
-    runs-on: ubuntu-latest
+      - name: Run hifini script
+        run: node src/kuwo.js
 
-    steps:
-      # Checkout repository
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      # Sync node version and setup cache
-      - name: Sync node version and setup cache
-        uses: actions/setup-node@v4
-        with:
-          node-version: "lts/*"
-
-      # Install pnpm globally
-      - name: Install pnpm
-        run: npm install -g pnpm
-
-      # Install frontend dependencies
-      - name: Install frontend dependencies
-        run: pnpm install
-
-  kuwo:
-    needs: qq
-    permissions:
-      contents: write
-      actions: write
-      attestations: write
-      deployments: write
-      packages: write
-      id-token: write
-    strategy:
-      fail-fast: false
-
-    runs-on: ubuntu-latest
-
-    steps:
-      # Checkout repository
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      # Sync node version and setup cache
-      - name: Sync node version and setup cache
-        uses: actions/setup-node@v4
-        with:
-          node-version: "lts/*"
-
-      # Install pnpm globally
-      - name: Install pnpm
-        run: npm install -g pnpm
-
-      # Install frontend dependencies
-      - name: Install frontend dependencies
-        run: pnpm install
+      - name: Print result
+        shell: bash
+        run: |
+          # 读取当前配置
+          RESULT_FILE="result.txt"
+          # 显示更新后的配置
+          cat $RESULT_FILE
