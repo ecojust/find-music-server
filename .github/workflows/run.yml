@@ -43,7 +43,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm ci  # 安装项目依赖
           npx puppeteer browsers install chrome  # 显式安装 Chrome
 
       - name: Run hifini script
