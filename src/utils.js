@@ -60,7 +60,10 @@ export const sleep = (t) => {
 
 export const fetchhtml = async (url, waitDomSelector) => {
   try {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      headless: "new", // 使用新的无头模式
+    });
     const page = await browser.newPage();
     const randomUA = userAgents[Math.floor(Math.random() * userAgents.length)];
     await page.setUserAgent(randomUA);
