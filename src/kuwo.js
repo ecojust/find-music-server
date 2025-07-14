@@ -6,7 +6,7 @@ const searchList = async (keyword) => {
   const url = `https://kuwo.cn/search/list?key=traveling`;
 
   console.log("url", url);
-  const html = await fetchhtml(url);
+  const html = await fetchhtml(url, ".search_list");
 
   console.log("html", html);
 
