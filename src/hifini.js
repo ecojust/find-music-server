@@ -2,6 +2,7 @@ import { fetchhtml, readFile, writeFile } from "./utils.js";
 
 const searchList = async (keyword) => {
   const url = `https://hifini.net/search.htm?keyword=${keyword}`;
+  console.log(url);
   const html = await fetchhtml(url);
 
   const musicArrMatch = html.match(/music\s*:\s*(\[[\s\S]*?\])\s*\}/);
