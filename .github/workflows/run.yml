@@ -9,7 +9,51 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  hifini:
+    permissions:
+      contents: write
+      actions: write
+      attestations: write
+      deployments: write
+      packages: write
+      id-token: write
+    strategy:
+      fail-fast: false
+
+    runs-on: windows-latest
+
+    steps:
+      # Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Sync node version and setup cache
+      - name: Sync node version and setup cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+
+      # Install pnpm globally
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      # Install frontend dependencies
+      - name: Install frontend dependencies
+        run: pnpm install
+
+      - name: Run hifini script
+        run: node src/hifini.js
+
+      - name: Print result
+        shell: bash
+        run: |
+          # 读取当前配置
+          RESULT_FILE="result.txt"
+          # 显示更新后的配置
+          cat $RESULT_FILE
+
   netease:
+    needs: hifini
     permissions:
       contents: write
       actions: write
@@ -106,47 +150,3 @@ jobs:
       # Install frontend dependencies
       - name: Install frontend dependencies
         run: pnpm install
-
-  hifini:
-    needs: kuwo
-    permissions:
-      contents: write
-      actions: write
-      attestations: write
-      deployments: write
-      packages: write
-      id-token: write
-    strategy:
-      fail-fast: false
-
-    runs-on: windows-latest
-
-    steps:
-      # Checkout repository
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      # Sync node version and setup cache
-      - name: Sync node version and setup cache
-        uses: actions/setup-node@v4
-        with:
-          node-version: "lts/*"
-
-      # Install pnpm globally
-      - name: Install pnpm
-        run: npm install -g pnpm
-
-      # Install frontend dependencies
-      - name: Install frontend dependencies
-        run: pnpm install
-
-      - name: Run hifini script
-        run: node src/hifini.js
-
-      - name: Print result
-        shell: bash
-        run: |
-          # 读取当前配置
-          RESULT_FILE="result.txt"
-          # 显示更新后的配置
-          cat $RESULT_FILE | grep version
